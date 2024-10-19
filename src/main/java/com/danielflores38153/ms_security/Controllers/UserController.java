@@ -2,6 +2,8 @@ package com.danielflores38153.ms_security.Controllers;
 
 import com.danielflores38153.ms_security.Models.User;
 import com.danielflores38153.ms_security.Repositories.UserRepository;
+import com.danielflores38153.ms_security.Services.EncryptionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,9 @@ public class UserController {
     @Autowired
     private UserRepository theUserRepository;
 
+    @Autowired
+    private EncryptionService theEncryptionService;
+
     @GetMapping("")
     public List<User> getAllUsers() {
         return this.theUserRepository.findAll();
@@ -27,6 +32,7 @@ public class UserController {
 
     @PostMapping("")
     public User createUser(@RequestBody User newUser) {
+        newUser.setPassword(theEncryptionService.convertSHA256(newUser.getPassword()));
         return this.theUserRepository.save(newUser);
     }
 
@@ -47,7 +53,7 @@ public class UserController {
         if (theUser != null) {
             theUser.setName(updateUser.getName());
             theUser.setEmail(updateUser.getEmail());
-            theUser.setPassword(updateUser.getPassword());
+            theUser.setPassword(theEncryptionService.convertSHA256(updateUser.getPassword()));
             return this.theUserRepository.save(theUser);
         }
         return null;

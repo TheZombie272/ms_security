@@ -31,24 +31,25 @@ public class RoleController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteUser(@PathVariable String id) {
-        Role theUser = this.theRoleRepository.findById(id).orElse(null);
+    public void deleteRole(@PathVariable String id) {
+        Role theRole = this.theRoleRepository.findById(id).orElse(null);
 
-        if (theUser != null) {
-            this.theRoleRepository.delete(theUser);
+        if (theRole != null) {
+            this.theRoleRepository.delete(theRole);
         }else {
-            System.out.println("No se puede eliminar el usuario");
+            System.out.println("No se puede eliminar el rol");
         }
     }
 
     @PutMapping("{id}")
-    public Role updateUser(@PathVariable String id, @RequestBody Role updatedRole) {
+    public Role updateRole(@PathVariable String id, @RequestBody Role updatedRole) {
         Role theRole = this.theRoleRepository.findById(id).orElse(null);
         if (theRole != null) {
             theRole.setName(updatedRole.getName());
             theRole.setDescription(updatedRole.getDescription());
             return this.theRoleRepository.save(theRole);
         }
+        System.out.println("No se ha encontrado el Role");
         return null;
     }
 }

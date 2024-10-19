@@ -7,4 +7,7 @@ import org.springframework.data.annotation.Id;
 public class Permission {
     @Id
     private String _id;
+
+    private String url;
+    private String method;
 }

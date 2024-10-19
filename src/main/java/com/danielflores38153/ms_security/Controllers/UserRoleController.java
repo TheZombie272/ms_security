@@ -74,9 +74,12 @@ public class UserRoleController {
     @PutMapping("{id}")
     public UserRole updateUser(@PathVariable String id, @RequestBody UserRole updateUserRole) {
         UserRole theUserRole = this.theUserRoleRepository.findById(id).orElse(null);
-        if (theUserRole != null) {
-            theUserRole.setUser(updateUserRole.getUser());
-            theUserRole.setRole(updateUserRole.getRole());
+        User theUser = this.userRepository.findById(updateUserRole.getUser().get_id()).orElse(null);
+        Role theRole = this.roleRepository.findById(updateUserRole.getRole().get_id()).orElse(null);
+
+        if (theUserRole != null && theRole != null && theUser != null) {
+            theUserRole.setUser(theUser);
+            theUserRole.setRole(theRole);
             return this.theUserRoleRepository.save(theUserRole);
         }
         return null;

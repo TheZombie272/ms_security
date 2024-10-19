@@ -17,7 +17,8 @@ import lombok.Data;
 public class Session {
     @Id
     private String _id;
-    private String tokem;
+    private String token2FA;
+    private String token;
     private boolean used;
     private int expiresAfter = 1800;
     @DBRef
@@ -25,8 +26,8 @@ public class Session {
     private LocalDateTime createDateTime;
     private LocalDateTime expirationDateTime;
 
-    public Session(String tokem, User user){
-        this.tokem = tokem;
+    public Session(String token, User user){
+        this.token = token;
         this.used = false;
         this.user = user;
         this.createDateTime = LocalDateTime.now();

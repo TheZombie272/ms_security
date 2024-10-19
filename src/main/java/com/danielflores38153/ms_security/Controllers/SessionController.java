@@ -44,7 +44,7 @@ public class SessionController {
         Session actualSession = this.theSessionRepository.findById(id).orElse(null);
         if (actualSession != null) {
             //el identiificador nunca se actualiza
-            actualSession.setTokem(newSession.getTokem());
+            actualSession.setToken(newSession.getToken());
             actualSession.setExpirationDateTime(newSession.getExpirationDateTime());
             this.theSessionRepository.save(actualSession);
             return actualSession;
