@@ -1,6 +1,5 @@
 package com.danielflores38153.ms_security.Models;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package com.danielflores38153.ms_security.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,28 @@ public class RolePermissionController {
     public RolePermission getRolePermissionById(@PathVariable String id) {
         return this.theRolePermissionRepository.findById(id).orElse(null);
     }
+
+    /*@PostMapping("/TODO/role/{roleId}")  //Función para agregar todos los permisos a un rol de una, sin escribirlos uno por uno
+    public List<RolePermission> todosParaRole(@PathVariable String roleId){
+        List<RolePermission> rolePermission = new ArrayList<>();
+        List<Permission> lista = this.thePermissionRepository.findAll();
+
+        Role theRole = this.roleRepository.findById(roleId).orElse(null);
+
+        if (theRole == null) {
+            return null;
+        }
+
+        for (Permission permission : lista) {
+            RolePermission theNew = new RolePermission();
+                theNew.setPermission(permission);
+                theNew.setRole(theRole);
+
+            rolePermission.add(this.theRolePermissionRepository.save(theNew));
+        }
+
+        return rolePermission;
+    }*/
 
     @GetMapping("/role/{roleId}")
     public List<RolePermission> getRolePermissionsByRoleId(@PathVariable String roleId) {
