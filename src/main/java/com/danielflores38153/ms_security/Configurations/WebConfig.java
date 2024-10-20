@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 
         registry.addInterceptor(securityInterceptor)
-                .addPathPatterns("/apji/**")
+                .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/public/**");
 
 

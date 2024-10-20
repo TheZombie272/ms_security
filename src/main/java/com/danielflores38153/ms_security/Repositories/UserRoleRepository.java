@@ -1,6 +1,5 @@
 package com.danielflores38153.ms_security.Repositories;
 
-import com.danielflores38153.ms_security.Models.Session;
 import com.danielflores38153.ms_security.Models.UserRole;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
