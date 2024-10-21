@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-@Getter   //Genera los metódos getter para todos l
+@Getter   //Genera los metódos getter para todos
 @Setter
 public class User {
 
