@@ -20,6 +20,55 @@ public class Session {
     private String token2FA;
     private String token;
     private boolean used;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getToken2FA() {
+        return token2FA;
+    }
+
+    public void setToken2FA(String token2FA) {
+        this.token2FA = token2FA;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    public int getExpiresAfter() {
+        return expiresAfter;
+    }
+
+    public void setExpiresAfter(int expiresAfter) {
+        this.expiresAfter = expiresAfter;
+    }
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getExpirationDateTime() {
+        return expirationDateTime;
+    }
+
+    public void setExpirationDateTime(LocalDateTime expirationDateTime) {
+        this.expirationDateTime = expirationDateTime;
+    }
+
     private int expiresAfter = 1800;
     @DBRef
     private User user;
@@ -33,5 +82,22 @@ public class Session {
         this.createDateTime = LocalDateTime.now();
         this.expirationDateTime = LocalDateTime.now().plusSeconds(1800);
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public Session(){}
 
 }
