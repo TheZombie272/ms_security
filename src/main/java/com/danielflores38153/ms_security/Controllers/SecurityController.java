@@ -1,8 +1,6 @@
 package com.danielflores38153.ms_security.Controllers;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.danielflores38153.ms_security.Models.Session;
 import com.danielflores38153.ms_security.Models.User;
@@ -29,8 +27,6 @@ public class SecurityController {
     @Autowired
     private UserRepository theUserRepository;
     @Autowired
-    private UserRoleRepository theUserRoleRepository; // Repositorio para roles de usuario
-    @Autowired
     private EncryptionService theEncryptionService;
     @Autowired
     private JwtService theJwtService;
@@ -38,9 +34,6 @@ public class SecurityController {
     private SessionRepository theSessionRepository;
     @Autowired
     private EmailService theEmailService;
-
-    // Mapa para contar los logins por rol
-    private final Map<String, Integer> roleLoginCounter = new HashMap<>();
 
     @PostMapping("/login")
     public HashMap<String, Object> login(@RequestBody User theNewUser,
