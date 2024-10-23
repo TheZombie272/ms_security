@@ -1,7 +1,11 @@
 package com.danielflores38153.ms_security.Controllers;
 
 import com.danielflores38153.ms_security.Models.User;
+import com.danielflores38153.ms_security.Models.UserRole;
+import com.danielflores38153.ms_security.Models.Role;
 import com.danielflores38153.ms_security.Models.Session;
+import com.danielflores38153.ms_security.Repositories.UserRoleRepository;
+import com.danielflores38153.ms_security.Repositories.RoleRepository;
 import com.danielflores38153.ms_security.Repositories.SessionRepository;
 import com.danielflores38153.ms_security.Repositories.UserRepository;
 import com.danielflores38153.ms_security.Services.EncryptionService;
@@ -10,12 +14,14 @@ import com.danielflores38153.ms_security.Services.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -32,6 +38,12 @@ public class SecurityController {
     @Autowired
     private HttpService theHttpService;
 
+    // Sustentación
+    @Autowired
+    private UserRoleRepository theUserRoleRepository;
+    @Autowired
+    private RoleRepository theRoleRepository;
+
     @PostMapping("/login")
     public HashMap<String, Object> login(@RequestBody User theNewUser,
                                          final HttpServletResponse response) throws IOException {
@@ -43,7 +55,7 @@ public class SecurityController {
                 theActualUser.getPassword().equals(theEncryptionService.convertSHA256(theNewUser.getPassword()))) {
                 
             String secureInt = String.valueOf((new SecureRandom()).nextInt(1000000));
-            this.send2FA(secureInt, theActualUser); // Enviamos el correo con el código para el 2FA
+            //this.send2FA(secureInt, theActualUser); // Enviamos el correo con el código para el 2FA
 
             Session theSession = new Session(token, theActualUser); //Iniciamos una session con un token '' vacio
             theSession.setToken2FA(secureInt);
@@ -59,6 +71,43 @@ public class SecurityController {
             return theResponse;
         }
 
+    }
+
+    @GetMapping("/role_login")
+    public Role role_login(){
+        // Buscamos por todas las sessiones
+        List<Session> sesiones = this.theSessionRepository.findAll();
+
+        // Ordenamos todos los roles para poder contarlos
+        List<Role> roles = this.theRoleRepository.findAll();
+        
+        HashMap<Role, Integer> conteo = new HashMap<>(); // HashMap para contar
+
+        // Ponemos todos los roles en modo clave valor comenzando con 0
+        for (Role role : roles) {
+            conteo.put(role, 0);
+        }
+
+        for (Session session : sesiones) {
+            List<UserRole> theUserRoles = this.theUserRoleRepository.getUserRolesByUserId(session.getUser().get_id());
+
+            for (UserRole userRole : theUserRoles) {
+                conteo.put(userRole.getRole(), conteo.get(userRole.getRole())+1);
+            }
+        }
+
+        Role roleMax = null;
+        int maxConteo = 0;
+        
+        for (Role role : conteo.keySet()) {  // Recorremos todas las llaves para obetener el mayor
+            if (conteo.get(role) > maxConteo) {
+                maxConteo = conteo.get(role); // Actualizar el máximo
+                roleMax = role; // Actualizar la clave correspondiente
+            }
+        }
+
+        System.out.println(conteo.toString());
+        return roleMax;
     }
 
 
