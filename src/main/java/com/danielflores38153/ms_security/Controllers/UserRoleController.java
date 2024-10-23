@@ -35,11 +35,13 @@ public class UserRoleController {
         return this.theUserRoleRepository.findById(id).orElse(null);
     }
 
+    //Roles de un usuario específico
     @GetMapping("/user/{userId}")
     public List<UserRole> getUserRolesByUserId(@PathVariable String userId) {
         return this.theUserRoleRepository.getUserRolesByUserId(userId);
     }
 
+    //Usuarios asociados a un rol
     @GetMapping("/role/{roleId}")
     public List<UserRole> getUserRolesByRoleId(@PathVariable String roleId) {
         return this.theUserRoleRepository.getUserRolesByRoleId(roleId);
