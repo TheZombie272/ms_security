@@ -23,7 +23,7 @@ import com.danielflores38153.ms_security.Repositories.RolePermissionRepository;
 
 @Controller
 @RestController
-@RequestMapping("/api/role_permissions")
+@RequestMapping("/role_permissions")
 public class RolePermissionController {
     
     @Autowired

@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping ("/api/sessions")
+@RequestMapping ("/sessions")
 
 public class SessionController {
 

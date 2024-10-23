@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/user_roles")
+@RequestMapping("/user_roles")
 public class UserRoleController {
 
     @Autowired
