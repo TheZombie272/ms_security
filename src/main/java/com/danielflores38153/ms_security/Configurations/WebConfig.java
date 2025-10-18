@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 
         registry.addInterceptor(securityInterceptor)
-                .addPathPatterns("/api/**") // Si se quiere desactivar seguridad poner en vez de api cualquier cosa
+                .addPathPatterns("/app/**") // Si se quiere desactivar seguridad poner en vez de api cualquier cosa
                 .excludePathPatterns("/api/public/**");
 
 

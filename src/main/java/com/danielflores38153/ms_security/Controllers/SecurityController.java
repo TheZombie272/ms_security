@@ -60,9 +60,9 @@ public class SecurityController {
                 theUserSession.setType("session");
                 Session theSendSession=theSessionRepository.save(theUserSession); // Guarda la sesión en la base de datos
     
-                // Enviar token 2FA por correo
-                this.theEmailService.sendEmail(theActualUser.getEmail(), "Código",
-                        "Sus datos: " + theUserSession.get_id() + " Token: " + token2FA);
+                // Enviar token 2FA por correo 
+                /*this.theEmailService.sendEmail(theActualUser.getEmail(), "Código",
+                        "Sus datos: " + theUserSession.get_id() + " Token: " + token2FA); */
                   System.out.println(token2FA);
                 theSendSession.setToken2FA(null);
                 theResponse.put("session", theSendSession);
@@ -76,7 +76,8 @@ public class SecurityController {
     
         // Verificar token y generar jwt
         @PostMapping("/verify2fa")
-        public String verify2FA(@RequestBody Session theSession, final HttpServletResponse response) throws IOException {
+        public HashMap<String, Object> verify2FA(@RequestBody Session theSession, final HttpServletResponse response) throws IOException {
+            HashMap<String, Object> theResponse = new HashMap<>();
             Session theUserSession = this.theSessionRepository.findById(theSession.get_id()).orElse(null);
             if (theUserSession != null && theUserSession.getToken2FA().equals(theSession.getToken2FA())
             && !theUserSession.getUsed() && theUserSession.getType().equals("session")) {
@@ -87,8 +88,11 @@ public class SecurityController {
                 theUserSession.setToken(token);
                 theUserSession.setUsed(true);
                 theSessionRepository.save(theUserSession);
+
+                theResponse.put("token", token);
+                theResponse.put("user", theUserSession.getUser());
     
-                return token;
+                return theResponse;
             }  else {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Código de verificación incorrecto");
                 return null;
