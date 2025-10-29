@@ -39,7 +39,9 @@ public class PaymentController {
         if (theUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
         }
-        payment.setId(theUser.get_id());
+        // no asignar el id del usuario al id del pago (crearía conflicto y es semánticamente incorrecto)
+        // En su lugar guardamos la referencia al usuario (DBRef) para que la consulta por user._id funcione.
+        payment.setUser(theUser);
         payment.setStatus("PENDING");
         Payment saved = paymentRepository.save(payment);
 
