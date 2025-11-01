@@ -36,6 +36,7 @@ public class PaymentController {
     public ResponseEntity<?> createPayment(@RequestBody Payment payment, HttpServletRequest request) {
         // opcional: ligar el payment al usuario autenticado en vez de confiar en el cliente
         User theUser = validatorsService.getUser(request);
+        System.out.println("Usuario autenticado: " + theUser);
         if (theUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
         }
@@ -58,7 +59,9 @@ public class PaymentController {
     // Obtener todos los payments del usuario autenticado (usa el token, no acepta userId desde el cliente)
     @GetMapping("/me")
     public ResponseEntity<?> getMyPayments(HttpServletRequest request) {
+        System.out.println("Obteniendo pagos del usuario autenticado...");
         User theUser = validatorsService.getUser(request);
+        System.out.println("Usuario autenticado: " + theUser);
         if (theUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
         }

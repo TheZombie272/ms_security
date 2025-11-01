@@ -3,6 +3,7 @@ package com.danielflores38153.ms_security.Configurations;
 import com.danielflores38153.ms_security.Interceptors.SecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,4 +22,12 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     }
+
+    @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") // aplica a todos los endpoints
+                        .allowedOrigins("http://localhost:8081") // tu frontend
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*");
+            }
 }
