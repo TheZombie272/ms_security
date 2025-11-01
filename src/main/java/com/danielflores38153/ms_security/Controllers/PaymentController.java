@@ -15,7 +15,7 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("/api/public/payments")
 public class PaymentController {
 
     private final PaymentRepository paymentRepository;
